@@ -1,0 +1,51 @@
+.NavBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 13px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--off-white);
+  box-shadow:
+    0 0 4px 0 rgba(0, 0, 0, 0.12),
+    0 4px 4px 0 rgba(0, 0, 0, 0.24);
+}
+
+.NavBar .nav-container {
+  width: 100%;
+  max-width: var(--container-width);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.NavBar a,
+.NavBar button {
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.NavBar a:hover,
+.NavBar button:hover {
+  text-decoration: underline;
+}
+
+.NavBar .nav-header a {
+  font-size: 20px;
+  color: var(--black);
+}
+
+.NavBar .nav-links a,
+.NavBar .nav-links button {
+  font-size: 12px;
+  color: var(--gray);
+  padding: 0 8px;
+}
+
+.NavBar .nav-links a:last-child,
+.NavBar .nav-links button:last-child {
+  padding-right: 0;
+}
