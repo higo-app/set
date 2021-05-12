@@ -9,12 +9,10 @@ const Modal = (props) => {
                 <div className="modal-content">
                     <div className="content">
                         {
-                            props.message
+                            props.children
                         }
                     </div>
-                    <button className="Button" onClick={props.action}>
-                        Ok
-                    </button>
+                 
                 </div>
             </div>  
         </>

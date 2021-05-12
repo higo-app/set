@@ -1,13 +1,13 @@
 const constructDeck = () => {
-    let shapes = ["Diamond", "Oval", "Squiggle"]
-    let colors = ["Red", "Purple", "Green"]
+    let shapes = ["diamond", "oval", "squiggle"]
+    let colors = ["red", "purple", "green"]
     let numbers = [1, 2, 3]
-    let shadings = ["Solid", "Striped", "Outlined"]
+    let shadings = ["solid", "striped", "outlined"]
     let deck = [];
     let position = 0;
-    for (let number in numbers)
-        for (let shape in shapes)
-            for (let color in colors)
+    for (let number in numbers){
+        for (let shape in shapes){
+            for (let color in colors){
                 for (let shading in shadings){
                     deck.push({
                         shape: shapes[shape],
@@ -18,6 +18,10 @@ const constructDeck = () => {
                     });
                     position += 1
                 }
+            }
+        }
+    }
+       
     return deck;
 }
 
@@ -49,21 +53,22 @@ const areEqual = (positionOne, positionTwo, positionThree) => {
     
     const properties = ["shape", "color", "shading", "number"]
     if (positionOne > 0 && positionTwo > 0 && positionThree > 0) {
-        for (let i = 0; i < properties.length; ++i) {
+        for(let property in properties){
             if (!(
                 checkDifferentProperty(
-                    properties[i], positionOne, positionTwo, positionThree
+                    properties[property], positionOne, positionTwo, positionThree
                 ) || checkEqualProperty(
-                    properties[i], positionOne, positionTwo, positionThree
+                    properties[property], positionOne, positionTwo, positionThree
                 )
             )
             ) {
-                return { "result": false, "status": `Check the property ${properties[i]} in the set` }
+                return false
             }
         }
-        return { "result": true }
+       
+        return true
     }
-    return { "result": false }
+    return false
 }
 
 
@@ -76,8 +81,7 @@ const solve = (deck) => {
                 let positionB = deck[b]
                 let positionC = deck[c]
                 if(positionI && positionB && positionC){
-                    let position = areEqual(positionI.position, positionB.position, positionC.position)
-                    if (position.result  === true){
+                    if (areEqual(positionI.position, positionB.position, positionC.position)){
                         solutions.push([i, b, c]);
                     }
                 }
@@ -91,26 +95,30 @@ const originalDeck = constructDeck();
 
 const getBoard = (deck, size, board = []) => {
     let deckSize = deck.length
-    for(let i = 0; i < board.length; ++i){
-        if(!board[i]){
-            let index = generateRandomNumber(deckSize -  i)
-            board[i] = deck.splice(index, 1)[0]
+    while(board.length > 0){
+        let item = board.pop()
+        if(item){
+            deck.push(item)
         }
     }
-    for(let i = board.length; i < size ; ++i){
+    for(let i = 0; i < size ; ++i){
         let index = generateRandomNumber(deckSize -  i)
         board.push(
             deck.splice(index, 1)[0]
         )
     }
     let solutions = []
-    while(solutions.length === 0){
+    let counter = 0
+    while(solutions.length === 0 && deck.length > 0 && counter < 5){
         solutions = solve(board)
-        board.pop()
-        board.push(
-            deck.pop()
-        )
+        deck.push(board.pop())
+        board.push(deck.pop())
+        counter += 1
     }
+    if(counter >= 5){
+        return getBoard(deck, size, board)
+    }
+    console.log(solutions)
     return [board, solutions]
 }
 

@@ -1,35 +1,40 @@
-.card {
-  border: 1px solid rgba(0, 0, 0, 0);
+.card,
+.empty-card {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   cursor: pointer;
-  background-color: #dfdfdf;
-  width: 90px;
-  height: 90px;
+  background-color: white;
+  width: 62px;
+  margin-right: 10px;
+  height: 55px;
+  margin-top: 15px;
 }
 
-.card img {
-  width: 20px;
-  height: 30px;
+.empty-card {
+  border: 1px solid white;
+  box-shadow: 0 4px 8px 0 transparent;
 }
 
-.Red {
-  filter: invert(26%) sepia(99%) saturate(5316%) hue-rotate(358deg)
-    brightness(100%) contrast(103%);
+.card {
+  border: 1px solid var(--gray);
+  font-size: 1.4rem;
+  box-shadow: 0 4px 8px 0 var(--translucent-gray);
 }
 
-.Green {
-  filter: invert(64%) sepia(69%) saturate(3128%) hue-rotate(87deg)
-    brightness(111%) contrast(115%);
+.red ::before {
+  color: var(--set-red) !important;
 }
 
-.Purple {
-  filter: invert(23%) sepia(100%) saturate(7074%) hue-rotate(273deg)
-    brightness(93%) contrast(120%);
+.green ::before {
+  color: var(--set-green) !important;
+}
+
+.purple ::before {
+  color: var(--set-purple);
 }
 
 .selected {
-  border: 1px solid white;
+  background-color: var(--translucent-blue);
 }

@@ -1,0 +1,10 @@
+.message {
+  padding: 1rem;
+  background-color: var(--translucent-blue);
+  width: var(--container-width);
+  color: var(--dark-blue);
+  border-radius: 5px;
+}
+
+.danger {
+}

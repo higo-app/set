@@ -10,3 +10,14 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+.title {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.content {
+  padding: 5px;
+  display: block;
+  color: (--dark-gray);
+}

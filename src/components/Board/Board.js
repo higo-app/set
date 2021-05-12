@@ -1,8 +1,10 @@
 import Card from 'components/Card'
 import React from 'react';
-import './styles.css';
-import {originalDeck, getBoard, areEqual,solve } from 'utils'
 import Modal from 'components/Modal'
+import Message from 'components/Message'
+import {Link} from 'react-router-dom'
+import {originalDeck, getBoard, areEqual,solve } from 'utils'
+import './styles.css';
 
 class Board extends React.Component {
 
@@ -10,12 +12,11 @@ class Board extends React.Component {
         super(props)
         let deck = [ ...originalDeck]
         let helper = getBoard(deck, 12)
-        console.log(helper)
         this.state = {
             deck: deck,
             board: helper[0],
             selected: [],
-            found: [],
+            win:false,
             error: null,
             initalTime: new Date(),
             solutions: helper[1]
@@ -31,27 +32,25 @@ class Board extends React.Component {
     handleSelected(position){
         let selected = this.state.selected
         if(selected.length === 2){
-            let result = areEqual(
-                this.state.board[selected[0]].position,
-                this.state.board[selected[1]].position, 
-                this.state.board[position].position
-            )
-            if(result.result){
+            if(
+                areEqual(
+                    this.state.board[selected[0]].position,
+                    this.state.board[selected[1]].position, 
+                    this.state.board[position].position
+                )
+            ){
                 let board = this.state.board
                 let positions = [
                     selected[0],
                     selected[1],
                     position
                 ]
-                let found = this.state.found
-                found.push(positions)
                 for(let i  = 0; i < positions.length; ++i){
                     board[positions[i]] = null
                 }
                 let solutions = solve(board)
                 console.log(solutions)
                 this.setState({
-                    found: found,
                     selected : [],
                     board: board,
                     solutions: solutions
@@ -60,20 +59,28 @@ class Board extends React.Component {
             else{
                 this.setState({
                     selected : [],
-                    error: result.status
+                    error: "Incorrect set"
                 })
             }
         }
         else{
-            if(!selected.includes(position)){
+            if(selected.includes(position)){
+                let index = selected.indexOf(position)
+                selected.splice(index, 1)
+                this.setState({
+                    error: null,
+                    selected: selected
+                })
+                
+            }
+            else{
                 selected.push(position)
                 this.setState({
                     error: null,
                     selected: selected
                 })
             }
-        }
-       
+        }  
     }
 
     reloadBoard(){
@@ -81,27 +88,51 @@ class Board extends React.Component {
         let helper = getBoard(this.state.deck, 12, board)
         this.setState({
             board: helper[0],
-            solutions: helper[1]
+            solutions: helper[1],
+            win: helper[1].length  === 0
         })
     }
 
     render() {
+
+        let modal = (<></>)
+        
+        if(this.state.solutions.length === 0 && !this.state.win){
+            modal = (
+                <Modal>
+                    <div className="content title">
+                        No sets available!!
+                    </div>
+                    <button className="Button" onClick={this.reloadBoard}>Shuffle cards</button>
+                </Modal>
+            )
+        }
+        if(this.state.win){
+            let diference = (Date.now() - this.state.initalTime)
+            let seconds = ((Math.floor(diference / 1000)))
+            modal = (
+                <Modal>
+                    <div className="content title">
+                        You win!
+                    </div>
+                    <div className="content">
+                        You find all the sets in {seconds} seconds.
+                    </div>
+                    <div className="content">
+                        <button className="Button" onClick={() => {window.location.reload()}}>Play again</button>
+                    </div>
+                    <div className="content">
+                        <Link className="Button" to={"/"}>Go to home</Link>
+                    </div>
+                </Modal>
+            )
+        }
         return (
-            <>
-                <div className="">
+            <div className="">
+                    <Message message={this.state.error}></Message>
                     {
-                        this.state.error
+                        modal
                     }
-                    {
-                        (this.state.solutions.length !== 0) ? (null) : 
-                        (
-                            <Modal 
-                                message="There´s no more set posible, tap ok to refresh"
-                                action={this.reloadBoard}
-                            ></Modal>
-                        )
-                    }
-                </div>
                 <div className="board">
                     {
                         this.state.board.map((item, i) => {
@@ -116,7 +147,7 @@ class Board extends React.Component {
                                 )
                             }else{
                                 return(
-                                    <div className="card"></div>
+                                    <div className="empty-card" key={i}></div>
                                 )
                             }
                                
@@ -124,12 +155,12 @@ class Board extends React.Component {
                     }
                 </div>
                 <div className="messages">
-                    Sets posible: {this.state.solutions.length}
+                    Sets possible: {this.state.solutions.length}
                 </div>
                 <div className="messages">
                     Total cards left: {this.state.deck.length}
                 </div>
-            </>
+            </div>
         )
     }
 

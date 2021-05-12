@@ -7,13 +7,13 @@ const Card = (props) => {
     let images = []
     for(let i = 0; i < number; ++i ){
         images.push(
-            <img src={`shapes/${shape} - ${shading}.svg`} key={`${shape}-${shading}-${i}`} className={color} alt="card"></img>
+            <span className={cx(color, `icon-${shape}-${shading}`)}></span>
         )
     }
     return (
         <div 
         onClick={props.handleClick}
-        className={cx("card", props.className, props.isSelected ? 'selected' : '')} >
+        className={cx("card", props.className, color, props.isSelected ? 'selected' : '')} >
             {
                 images
             }

@@ -7,13 +7,10 @@
   align-content: center;
   justify-items: center;
   align-items: center;
-  background-color: #303030;
+  position: relative;
   grid-template-columns: repeat(4, auto);
-  width: 400px;
-  height: 300px;
-}
-
-.message {
+  width: var(--container-width);
+  height: var(--container-width);
 }
 
 .messages {
