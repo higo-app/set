@@ -1,7 +1,8 @@
 import Card from 'components/Card'
 import React from 'react';
 import './styles.css';
-import {originalDeck, getBoard, areEqual } from 'utils'
+import {originalDeck, getBoard, areEqual,solve } from 'utils'
+import Modal from 'components/Modal'
 
 class Board extends React.Component {
 
@@ -9,16 +10,18 @@ class Board extends React.Component {
         super(props)
         let deck = [ ...originalDeck]
         let helper = getBoard(deck, 12)
-        let board = helper[0]
         console.log(helper)
         this.state = {
             deck: deck,
-            board: board,
+            board: helper[0],
             selected: [],
             found: [],
             error: null,
+            initalTime: new Date(),
             solutions: helper[1]
         }
+        this.handleSelected = this.handleSelected.bind(this)
+        this.reloadBoard = this.reloadBoard.bind(this)
     }
 
     componentDidMount(){
@@ -42,17 +45,10 @@ class Board extends React.Component {
                 ]
                 let found = this.state.found
                 found.push(positions)
-                let solutions = this.state.solutions
                 for(let i  = 0; i < positions.length; ++i){
-                    let helper = []
-                    for(let j = 0; j < solutions.length; ++j){
-                        if(!solutions[j].includes(positions[i])){
-                            helper.push(solutions[j])
-                        }
-                    }
-                    solutions = helper
                     board[positions[i]] = null
                 }
+                let solutions = solve(board)
                 console.log(solutions)
                 this.setState({
                     found: found,
@@ -67,16 +63,26 @@ class Board extends React.Component {
                     error: result.status
                 })
             }
-            
         }
         else{
-            selected.push(position)
-            this.setState({
-                error: null,
-                selected: selected
-            })
+            if(!selected.includes(position)){
+                selected.push(position)
+                this.setState({
+                    error: null,
+                    selected: selected
+                })
+            }
         }
        
+    }
+
+    reloadBoard(){
+        let board = this.state.board
+        let helper = getBoard(this.state.deck, 12, board)
+        this.setState({
+            board: helper[0],
+            solutions: helper[1]
+        })
     }
 
     render() {
@@ -85,6 +91,15 @@ class Board extends React.Component {
                 <div className="">
                     {
                         this.state.error
+                    }
+                    {
+                        (this.state.solutions.length !== 0) ? (null) : 
+                        (
+                            <Modal 
+                                message="There´s no more set posible, tap ok to refresh"
+                                action={this.reloadBoard}
+                            ></Modal>
+                        )
                     }
                 </div>
                 <div className="board">

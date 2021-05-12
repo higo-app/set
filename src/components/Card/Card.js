@@ -7,7 +7,7 @@ const Card = (props) => {
     let images = []
     for(let i = 0; i < number; ++i ){
         images.push(
-            <img src={`shapes/${shape} - ${shading}.svg`} className={color} alt="card"></img>
+            <img src={`shapes/${shape} - ${shading}.svg`} key={`${shape}-${shading}-${i}`} className={color} alt="card"></img>
         )
     }
     return (

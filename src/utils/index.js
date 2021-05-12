@@ -68,38 +68,50 @@ const areEqual = (positionOne, positionTwo, positionThree) => {
 
 
 const solve = (deck) => {
-    console.log(deck)
     let solutions = [];
-    for (let a = 0; a < deck.length; a++)
-      for (let b = a + 1; b < deck.length; b++)
-        for (let c = b + 1; c < deck.length; c++){
-            let position = areEqual(deck[a].position, deck[b].position, deck[c].position)
-            if (position.result  === true){
-                solutions.push([a, b, c]);
+    for (let i = 0; i < deck.length; i++){
+        for (let b = i + 1; b < deck.length; b++){
+            for (let c = b + 1; c < deck.length; c++){
+                let positionI = deck[i]
+                let positionB = deck[b]
+                let positionC = deck[c]
+                if(positionI && positionB && positionC){
+                    let position = areEqual(positionI.position, positionB.position, positionC.position)
+                    if (position.result  === true){
+                        solutions.push([i, b, c]);
+                    }
+                }
             }
         }
-            
-         
-    console.log(solutions)
+    }      
     return solutions;
 };
 
 const originalDeck = constructDeck();
 
-const getBoard = (deck, size) => {
-    let result = []
+const getBoard = (deck, size, board = []) => {
     let deckSize = deck.length
-    for(let i = 0; i < size ; ++i){
+    for(let i = 0; i < board.length; ++i){
+        if(!board[i]){
+            let index = generateRandomNumber(deckSize -  i)
+            board[i] = deck.splice(index, 1)[0]
+        }
+    }
+    for(let i = board.length; i < size ; ++i){
         let index = generateRandomNumber(deckSize -  i)
-        result.push(
+        board.push(
             deck.splice(index, 1)[0]
         )
     }
     let solutions = []
     while(solutions.length === 0){
-        solutions = solve(result)
+        solutions = solve(board)
+        board.pop()
+        board.push(
+            deck.pop()
+        )
     }
-    return [result, solutions]
+    return [board, solutions]
 }
 
 
