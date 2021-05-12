@@ -1,0 +1,21 @@
+.board {
+  display: flex;
+  height: auto;
+  position: relative;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  background-color: #303030;
+  grid-template-columns: repeat(4, auto);
+  width: 400px;
+  height: 300px;
+}
+
+.message {
+}
+
+.messages {
+  padding-top: 1rem;
+}

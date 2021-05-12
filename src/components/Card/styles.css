@@ -1,0 +1,35 @@
+.card {
+  border: 1px solid rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  background-color: #dfdfdf;
+  width: 90px;
+  height: 90px;
+}
+
+.card img {
+  width: 20px;
+  height: 30px;
+}
+
+.Red {
+  filter: invert(26%) sepia(99%) saturate(5316%) hue-rotate(358deg)
+    brightness(100%) contrast(103%);
+}
+
+.Green {
+  filter: invert(64%) sepia(69%) saturate(3128%) hue-rotate(87deg)
+    brightness(111%) contrast(115%);
+}
+
+.Purple {
+  filter: invert(23%) sepia(100%) saturate(7074%) hue-rotate(273deg)
+    brightness(93%) contrast(120%);
+}
+
+.selected {
+  border: 1px solid white;
+}

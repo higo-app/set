@@ -1,11 +1,11 @@
 import React from "react";
-
 import Page from '../../components/Page';
+import  Board from 'components/Board'
 
 const Play = () => {
   return (
     <Page>
-      <p>here goes the game</p>
+        <Board></Board>
     </Page>
   );
 };
