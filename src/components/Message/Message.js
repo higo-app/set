@@ -1,17 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import cx from 'classnames';
 import './styles.css'
 
 const Message = (props) => {
-    if(!props.message)
+
+    const {message, fadeAway} = props
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if(fadeAway)
+                fadeAway()
+        }, 3000)
+        return () => clearInterval(interval);
+    }, [fadeAway])
+
+    if(!message)
         return(
             <>
             </>
         )
+
     return(
         <>
-            <div className="message">
+            <div className={cx("message", props.className)}>
                 {
-                    props.message
+                    message
                 }
             </div>
         </>

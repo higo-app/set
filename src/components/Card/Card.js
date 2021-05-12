@@ -7,7 +7,7 @@ const Card = (props) => {
     let images = []
     for(let i = 0; i < number; ++i ){
         images.push(
-            <span className={cx(color, `icon-${shape}-${shading}`)}></span>
+            <span className={cx(color, `icon-${shape}-${shading}`)} key={`icon-${shape}-${shading}-${color}-${i}`}></span>
         )
     }
     return (

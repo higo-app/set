@@ -17,6 +17,7 @@ class Board extends React.Component {
             board: helper[0],
             selected: [],
             win:false,
+            message: null,
             error: null,
             initalTime: new Date(),
             solutions: helper[1]
@@ -51,6 +52,7 @@ class Board extends React.Component {
                 let solutions = solve(board)
                 console.log(solutions)
                 this.setState({
+                    message: "Correct set selected!",
                     selected : [],
                     board: board,
                     solutions: solutions
@@ -96,6 +98,7 @@ class Board extends React.Component {
     render() {
 
         let modal = (<></>)
+        let messages = []
         
         if(this.state.solutions.length === 0 && !this.state.win){
             modal = (
@@ -127,9 +130,31 @@ class Board extends React.Component {
                 </Modal>
             )
         }
+        if(this.state.error){
+            messages.push(
+                <Message
+                    key="error-message"
+                    message={this.state.error}
+                    className="danger"
+                    fadeAway={() => this.setState({error: null})}            
+                ></Message>
+            )
+        }
+        if(this.state.message){
+            messages.push(
+                <Message
+                    key="message"
+                    message={this.state.message}
+                    fadeAway={() => this.setState({message: null})}            
+                ></Message>
+            )
+        }
         return (
             <div className="">
-                    <Message message={this.state.error}></Message>
+                    
+                    {
+                        messages
+                    }
                     {
                         modal
                     }
