@@ -29,10 +29,25 @@ We expect you to implement the screens and functionality described below using t
 The codebase has the minimal dependencies required to run a React application, but we haven't decided on a few things.
 
 * Should we use `PropTypes` or some sort of static type checking like Flow or TypeScript?
+
+    -> The best manner to solve this, is asking ourselves if there should be components that requires to have a validation of the type in our components, if not, we can avoid the usage of this. But, if we are talking about a component that we will use a lot, like a counter or a select, we should consider the usage of the library prop-types for helping with the manage of the props. The use of Typescript will require to  
+
 * Should we use a linter or formatter and if so what is the best configuration?
+    
+    -> For me, beautify is the best formmater in the market with its default settings, the usage of jsconfig.json will give even more power to refractor the code when moving or renaming a file.
+
 * Should we invest in some form of style pre-processing? Are `classNames` and CSS variables (our current setup) enough?
+
+    -> Actually, I think that we should implement the usage of SASS, for reusing its functions or mixins. It would be a lot essier to mantain and to code, because we can use .sass files or .scss files to support css syntax, so anyone can code css without having to learn sass syntax. Another thing that we should do, is to separate the .css files from the components to another directory for having more control in the cache and files of every component or page.
+    We can even use modular css, with the use of .module.css files enabling us to reuse the naming of the classnames without causing any conflit on the other modules.
+
 * How should we handle game state?
+    
+    ->  It is a game, so the easiest way to do it, its to mange the state by the default state of a parent component. If we wanted to manage a more complex state without having to link every component, we can use contenxt or redux with a thunk for a more complex state management.
+
 * How can we test components and code in an isolated manner?
+
+    ->We can use Jest, as the react guide suggest it. Creating a single function of every component that we do.
 
 Before you implement any functionality we expect you to review the code and think of answers and (if applicable) solutions to these issues as you implement your code.
 

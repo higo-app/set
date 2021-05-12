@@ -1,0 +1,40 @@
+.card,
+.empty-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  background-color: white;
+  width: 62px;
+  margin-right: 10px;
+  height: 55px;
+  margin-top: 15px;
+}
+
+.empty-card {
+  border: 1px solid white;
+  box-shadow: 0 4px 8px 0 transparent;
+}
+
+.card {
+  border: 1px solid var(--gray);
+  font-size: 1.4rem;
+  box-shadow: 0 4px 8px 0 var(--translucent-gray);
+}
+
+.red ::before {
+  color: var(--set-red) !important;
+}
+
+.green ::before {
+  color: var(--set-green) !important;
+}
+
+.purple ::before {
+  color: var(--set-purple);
+}
+
+.selected {
+  background-color: var(--translucent-blue);
+}

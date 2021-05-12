@@ -1,0 +1,13 @@
+.message {
+  margin-top: 10px;
+  padding: 1rem;
+  background-color: var(--translucent-blue);
+  width: var(--container-width);
+  color: var(--dark-blue);
+  border-radius: 5px;
+}
+
+.danger {
+  background-color: var(--translucent-red);
+  color: var(--set-red);
+}
